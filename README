@@ -1,1 +1,19 @@
-Hello world
+Keyword Diviner takes two inputs: URLs and an abstract. Multiple URLs, pointing to online profile pages, may be supplied.
+
+It then parses the abstract input with an NLP library 'Maui', and returns a ranked list of potential topics.
+
+At this point it asks for user input:
+
+Has the parser assigned good relevance indicators? These may be adjusted by the user at this stage.
+
+Has the parser identified all topics? More may be added and assigned relevance.
+
+Has the parser identified irrelevant topics? These may be removed or have their relevance value decreased.
+
+Once this step has been completed, Topic Diviner parses the list of URLs supplied earlier, and returns a ranked list of matches with a value indicating the likelihood they are the author of the abstract supplied in the first step.
+
+URLs and abstracts are stored in a MySQL database using JDBC, and may be recalled for use at the respective stage, selectively or in bulk.
+
+With use and user input, the NLP library can be 'trained' to achieve better results.
+
+It is pretty well suited for use on academic papers out of the box, and I am interested in pushing this project forward to see if it can be used on cultural products.
