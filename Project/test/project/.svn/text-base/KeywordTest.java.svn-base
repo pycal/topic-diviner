@@ -1,0 +1,58 @@
+package project;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ * A Junit test for Keyword.java.
+ */
+public class KeywordTest {
+
+    /**
+     * Test of setPriority method, of class Keyword.
+     */
+    @Test
+    public void testSetPriority() {
+        System.out.println("setPriority");
+        int i = 0;
+        Keyword instance = new Keyword("CompScience", 1);
+        instance.setPriority(i);
+        assertEquals(instance.getPriority(), 0);
+    }
+
+    /**
+     * Test of getWord method, of class Keyword.
+     */
+    @Test
+    public void testGetWord() {
+        System.out.println("getWord");
+        Keyword instance = new Keyword("CompScience", 1);
+        String expResult = "CompScience";
+        String result = instance.getWord();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getPriority method, of class Keyword.
+     */
+    @Test
+    public void testGetPriority() {
+        System.out.println("getPriority");
+        Keyword instance = new Keyword("CompScience", 1);
+        int expResult = 1;
+        int result = instance.getPriority();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of toString method, of class Keyword.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        Keyword instance = new Keyword("CompScience", 1);
+        String expResult = "CompScience : 1";
+        String result = instance.toString();
+        assertEquals(expResult, result);
+    }
+}

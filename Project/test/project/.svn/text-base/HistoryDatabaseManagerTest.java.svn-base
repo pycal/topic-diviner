@@ -1,0 +1,65 @@
+package project;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ * A set of test cases testing HistoryDatabaseManager.java.
+ * Some method are not testable due to database connection issue.
+ * WARNING: THIS TEST SUITE WILL THROW ERRORS ON THE LOCAL MACHINES THAT ARE
+ * NOT GRANTED PERMMISION FOR ACCESSING THE DATABASE.
+ */
+public class HistoryDatabaseManagerTest {
+
+    // Empty HashSets for testing purpose.
+    HashSet<String> forTest1 = new HashSet<String>();
+    HashSet<String> forTest2 = new HashSet<String>();
+    // String abstract for testing purpose.
+    String paragraphAbstract1 = "This is an abstract text for testing purpose.";
+    LinkedList<Website> websiteList = new LinkedList<Website>();
+    Website website1 = new Website("www.google.com", false, forTest1, forTest2);
+
+    /**
+     * Test of saveAbstractToDB method, of class HistoryDatabaseManager.
+     */
+    @Test
+    public void testSaveAbstractToDB() throws Exception {
+        System.out.println("saveAbstractToDB");
+        String abstractText = "This is a testing text.";
+        HistoryDatabaseManager instance = new HistoryDatabaseManager();
+        instance.saveAbstractToDB(abstractText);
+        String expResult = "This is a testing text.";
+        String Result = instance.getAbstractHistoryFromDB().getLast();
+        assertEquals(expResult, Result);
+    }
+
+    /**
+     * Test of getAbstractHistoryFromDB method, of class HistoryDatabaseManager.
+     */
+    @Test
+    public void testGetAbstractHistoryFromDB() throws Exception {
+        System.out.println("getAbstractHistoryFromDB");
+        HistoryDatabaseManager instance = new HistoryDatabaseManager();
+        instance.saveAbstractToDB(paragraphAbstract1);
+
+        String expResult = paragraphAbstract1;
+        String result = instance.getAbstractHistoryFromDB().getLast();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getURLHistoryFromDB method, of class HistoryDatabaseManager.
+     */
+    @Test
+    public void testGetURLHistoryFromDB() throws Exception {
+        System.out.println("getURLHistoryFromDB");
+        HistoryDatabaseManager instance = new HistoryDatabaseManager();
+        instance.saveWebsitesToDB(websiteList);
+        String expResult = "www.google.com";
+        String result = instance.getURLHistoryFromDB().getLast();
+        assertEquals(expResult, result);
+
+    }
+}

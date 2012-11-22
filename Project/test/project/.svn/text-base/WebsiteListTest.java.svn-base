@@ -1,0 +1,126 @@
+package project;
+
+import java.util.LinkedList;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ *
+ * @author Raymond
+ */
+public class WebsiteListTest {
+
+    public ParagraphAbstract p1 = new ParagraphAbstract();
+
+    /**
+     * Test of reset method, of class WebsiteList.
+     */
+    @Test
+    public void testReset() {
+        System.out.println("reset");
+        WebsiteList instance = new WebsiteList();
+        instance.add("http://www.google.ca");
+        instance.reset();
+        assertTrue(instance.isEmpty());
+    }
+
+    /**
+     * Test of add method, of class WebsiteList.
+     */
+    @Test
+    public void testAdd() {
+        System.out.println("add");
+        String urlAddress = "http://www.google.ca";
+        WebsiteList instance = new WebsiteList();
+        boolean expResult = true;
+        boolean result = instance.add(urlAddress);
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of isEmpty method, of class WebsiteList.
+     */
+    @Test
+    public void testIsEmpty() {
+        System.out.println("isEmpty");
+        WebsiteList instance = new WebsiteList();
+        instance.add("http://www.google.com");
+        assertFalse(instance.isEmpty());
+    }
+
+    /**
+     * Test of delete method, of class WebsiteList.
+     */
+    @Test
+    public void testDelete() {
+        System.out.println("delete");
+        String urlAddress = "http://www.google.com";
+        WebsiteList instance = new WebsiteList();
+        instance.add(urlAddress);
+        instance.delete(urlAddress);
+        assertTrue(instance.isEmpty());
+    }
+
+    /**
+     * Test of compare method, of class WebsiteList.
+     */
+    @Test
+    public void testCompare() {
+        System.out.println("compare");
+        WebsiteList instance = new WebsiteList();
+        instance.add("http://www.baidu.com");
+        instance.add("http://www.google.ca");
+        instance.add("http://www.yahoo.ca");
+        String expResult = "http://www.yahoo.ca";
+        String result = instance.compare(p1).getFirst();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of getWebsiteList method, of class WebsiteList
+     */
+    @Test
+    public void testGetWebsiteList() {
+        System.out.println("getWebsiteList");
+        WebsiteList instance = new WebsiteList();
+        instance.add("http://www.google.ca");
+        instance.add("http://www.yahoo.ca");
+        String expResult = "http://www.google.ca";
+        String Result = instance.getWebsites().getFirst().getUrlAddress();
+        assertEquals(expResult, Result);
+    }
+
+    /**
+     * Test of getUrlAddresses method, of class WebsiteList.
+     */
+    @Test
+    public void testGetUrlAddresses() {
+        System.out.println("getUrlAddresses");
+        WebsiteList instance = new WebsiteList();
+        instance.add("http://www.google.ca");
+        instance.add("http://www.baidu.com");
+        instance.add("http://www.yahoo.ca");
+        String expResult = "http://www.google.ca";
+        String Result = instance.getUrlAddresses().getFirst();
+        assertEquals(expResult, Result);
+    }
+
+    /**
+     * Test of toString method, of class WebsiteList.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        WebsiteList instance = new WebsiteList();
+        instance.add("http://www.google.com");
+        instance.add("http://www.baidu.com");
+        String expResult = "[0.0% : http://www.google.com, "
+                + "0.0% : http://www.baidu.com]";
+        String result = instance.toString();
+        System.out.println(result);
+        assertEquals(expResult, result);
+
+    }
+}

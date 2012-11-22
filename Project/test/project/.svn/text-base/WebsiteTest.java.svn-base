@@ -1,0 +1,106 @@
+package project;
+
+import java.util.LinkedList;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ * A JUnit test for Website.java.
+ * Note: some method may not be tested due to its functionality directly react
+ * to GUI.
+ */
+public class WebsiteTest {
+
+    String address1 = "www.google.ca";
+    String address2 = "http://www.cdf.toronto.edu/~csc207h/"
+            + "fall/assignments/a2/tests/test-empty.html";
+
+    /**
+     * Test of getUrlAddress method, of class Website.
+     */
+    @Test
+    public void testGetUrlAddress() {
+        System.out.println("getUrlAddress");
+        Website instance = new Website(address1, true, null, null);
+        String expResult = address1;
+        String result = instance.getUrlAddress();
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testGetUrlAddress2() {
+        System.out.println("getUrlAddress");
+        Website instance = new Website("www.GOOGLE.ca", true, null, null);
+        String expResult = "www.GOOGLE.ca";
+        String result = instance.getUrlAddress();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of isValid method, of class Website.
+     */
+    @Test
+    public void testIsValid() {
+        System.out.println("isValid");
+        Website instance = new Website(address1, true, null, null);
+        boolean result = instance.isValid();
+        assertFalse(result);
+    }
+
+    /**
+     * Test of getMatchedKeywordList method, of class Website.
+     */
+    @Test
+    public void testGetMatchedKeywordList() {
+        System.out.println("getMatchedKeywordList");
+        Website instance = new Website(address1, true, null, null);
+        int expResult = 4;
+        int result = instance.getMatchedKeywordList().size();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setMatchedKeywordList method, of class Website.
+     */
+    @Test
+    public void testSetMatchedKeywordList() {
+        System.out.println("setMatchedKeywordList");
+        LinkedList<Keyword> KeywordList = null;
+        int abstotalpriority = 0;
+        Website instance = new Website(address1, true, null, null);
+        instance.setMatchedKeywordList(KeywordList, abstotalpriority);
+        int expResult = 0;
+        int result = instance.getMatchedKeywordList().size();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getTotalPriority method, of class Website.
+     */
+    @Test
+    public void testGetTotalPriority() {
+        System.out.println("getTotalPriority");
+        Website instance = new Website("http://www.cdf.toronto.edu/"
+                + "~csc207h/fall/assignments/a2/tests/test-empty.html",
+                true, null, null);
+        int expResult = 12;
+        int result = instance.getTotalPriority();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of toString method, of class Website.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        Website instance = new Website("http://www.cdf.toronto.edu/~csc207h/"
+                + "fall/assignments/a2/tests/test-empty.html",
+                true, null, null);
+        String expResult = "0.0% : http://www.cdf.toronto.edu/~csc207h/"
+                + "fall/assignments/a2/tests/test-empty.html";
+        String result = instance.toString();
+        assertEquals(expResult, result);
+
+    }
+}

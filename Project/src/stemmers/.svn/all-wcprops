@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/csc207-2010-09/L5101_1/!svn/ver/137/Project/Project/src/stemmers
+END
+FrenchStemmer.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/csc207-2010-09/L5101_1/!svn/ver/137/Project/Project/src/stemmers/FrenchStemmer.java
+END
+SpanishStemmer.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/csc207-2010-09/L5101_1/!svn/ver/137/Project/Project/src/stemmers/SpanishStemmer.java
+END
+SremovalStemmer.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/csc207-2010-09/L5101_1/!svn/ver/137/Project/Project/src/stemmers/SremovalStemmer.java
+END
+GermanStemmer.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/csc207-2010-09/L5101_1/!svn/ver/137/Project/Project/src/stemmers/GermanStemmer.java
+END
+LovinsStemmer.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/csc207-2010-09/L5101_1/!svn/ver/137/Project/Project/src/stemmers/LovinsStemmer.java
+END
+SpanishStemmerSB.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/csc207-2010-09/L5101_1/!svn/ver/137/Project/Project/src/stemmers/SpanishStemmerSB.java
+END
+PorterStemmer.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/csc207-2010-09/L5101_1/!svn/ver/137/Project/Project/src/stemmers/PorterStemmer.java
+END
+IteratedLovinsStemmer.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/csc207-2010-09/L5101_1/!svn/ver/137/Project/Project/src/stemmers/IteratedLovinsStemmer.java
+END
+NoStemmer.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/csc207-2010-09/L5101_1/!svn/ver/137/Project/Project/src/stemmers/NoStemmer.java
+END
+Stemmer.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/csc207-2010-09/L5101_1/!svn/ver/137/Project/Project/src/stemmers/Stemmer.java
+END

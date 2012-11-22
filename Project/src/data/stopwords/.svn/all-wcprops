@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/csc207-2010-09/L5101_1/!svn/ver/180/Project/Project/src/data/stopwords
+END
+stopwords_en.txt
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/csc207-2010-09/L5101_1/!svn/ver/180/Project/Project/src/data/stopwords/stopwords_en.txt
+END
+stopwords_es.txt
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/csc207-2010-09/L5101_1/!svn/ver/180/Project/Project/src/data/stopwords/stopwords_es.txt
+END
+stopwords_fr.txt
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/csc207-2010-09/L5101_1/!svn/ver/180/Project/Project/src/data/stopwords/stopwords_fr.txt
+END

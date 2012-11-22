@@ -1,0 +1,286 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package project;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.sql.*;
+import java.util.LinkedList;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+
+/**
+ *
+ * @author cailen
+ */
+public class HistoryDatabaseManager {
+
+    //------------------------------------------------------------------------//
+    //  Connection related variables for accessing a mySQL DB via JDBC
+    //------------------------------------------------------------------------//
+    static private Connection conn = null;
+    static private boolean connStatus = false;
+    static private Statement s = null;
+    // The username credential for accessing a mySQL DB
+    static protected String dbuserName = "";
+    // The password credential for accessing a mySQL DB
+    static protected String dbpassword = "";
+    // The address of a mySQL DB
+    static protected String dburl =
+            "jdbc:mysql://205.186.161.66:3306/csc207_historydbmgr";
+
+    //------------------------------------------------------------------------//
+    //  Error Messages
+    //------------------------------------------------------------------------//
+    /** The error message when connection cannot be established
+     * to the history database. */
+    static private String connectionMessage = "Connection to search history "
+            + "database cannot be established at this time. \nPlease make sure "
+            + "you are connected to the Internet and have permission to access "
+            + "the search history database.";
+    /** The error message when connection cannot be established during saving.*/
+    static private String connectionMessageForSave =
+            "Cannot save search information to database.\n" + connectionMessage;
+    /** The error message displayed when there is an error in the history
+     * database. */
+    static private String databaseMessage = "There is an error in connecting to "
+            + "the search history database - it cannot be reached at this time.\n"
+            + "Please try again later.";
+    /** The error message displayed when there is an error during saving. */
+    static private String databaseMessageForSave =
+            "Cannot save search information to database. " + databaseMessage;
+    //------------------------------------------------------------------------//
+
+    /**
+     * A test harness for the class. Mainly to see if the connection is established
+     * successfully. Performs a simple update sequence to confirm.
+     * @param args
+     * @throws SQLException
+     */
+    public static void main(String[] args) throws SQLException, HistoryDatabaseException {
+        // Set up a new DB MGR, input credentials, and establish a connection.
+        HistoryDatabaseManager histMgr = new HistoryDatabaseManager();
+        histMgr.setDBCredentials("csc207usr", "csc207passw0rd");
+        
+        // INSERT a record in to the DB.
+        histMgr.saveAbstractToDB("This is an example abstract");
+        // Please be kind, rewi..I mean disconnect.
+        
+
+//        //--------------------------------------------------------------------//
+//        //  This starts us off with a fresh, new, clean database.
+//        //--------------------------------------------------------------------//
+//        s.executeUpdate("DROP TABLE IF EXISTS abstract");
+//        s.executeUpdate("DROP TABLE IF EXISTS url");
+//        s.executeUpdate(
+//                "CREATE TABLE abstract ("
+//                + "id INT UNSIGNED NOT NULL AUTO_INCREMENT,"
+//                + "PRIMARY KEY (id),"
+//                + "date CHAR(40), abstractText TEXT(4000))");
+//        s.executeUpdate(
+//                "CREATE TABLE url ("
+//                + "id INT UNSIGNED NOT NULL AUTO_INCREMENT,"
+//                + "PRIMARY KEY (id),"
+//                + "date TIMESTAMP(8), urlString CHAR(255))");
+//        s.executeUpdate(
+//                "INSERT INTO abstract (date, abstractText)"
+//                + " VALUES"
+//                + "(NOW(), 'lorem ipsum'),"
+//                + "(NOW(), 'moar lorem'),"
+//                + "(NOW(), 'mostestt ipsum'),"
+//                + "(NOW(), 'ipsum nauseum')");
+//        s.executeUpdate(
+//                "INSERT INTO url (date, urlString)"
+//                + " VALUES"
+//                + "(NOW(), 'http://salacioussound.com'),"
+//                + "(NOW(), 'http://kmsm.ca'),"
+//                + "(NOW(), 'http://oebenterprise.com'),"
+//                + "(NOW(), 'http://herofund.ca')");
+//        System.out.println("Done");
+    }
+
+    /**
+     * Saves the text from an abstract to the database.
+     * @param String abstractText
+     * @throws HistoryDatabaseException Thrown when the history database
+     * cannot be reached.
+     */
+    public void saveAbstractToDB(String abstractText)
+            throws HistoryDatabaseException {
+        
+        try {
+            if (!connStatus) {
+                establishDBConnection();
+            }
+            s.executeUpdate(
+                    "INSERT INTO abstract (date, abstractText)"
+                    + " VALUES"
+                    + "(NOW(), '" + abstractText + "')");
+        } catch (SQLException e) {
+            throw new HistoryDatabaseException(databaseMessageForSave);
+        }
+        terminateDBConnection();
+    }
+
+    /**
+     * Saves one URL to the database. Helper function for saveWebsitesToDB.
+     * @param urlString
+     * @throws HistoryDatabaseException Thrown when a connection to 
+     * the history database cannot be established.
+     */
+    private void saveWebsiteToDB(String urlString)
+            throws HistoryDatabaseException {
+        
+        try {
+            if (!connStatus) {
+                establishDBConnection();
+            }
+            s.executeUpdate(
+                    "INSERT INTO url (date, urlString)"
+                    + " VALUES(NOW(), '" + urlString + "')");
+        } catch (SQLException e) {
+            throw new HistoryDatabaseException(databaseMessageForSave);
+        }
+    }
+
+    /**
+     * Iterates through a LinkedList containing 1 or more Website objects and
+     * supplies those websites as parameter(s) to the saveURLToDB method.
+     * @param websiteLinkedList
+     * @throws HistoryDatabaseException Thrown when a connection to
+     * the history database cannot be established.
+     */
+    public void saveWebsitesToDB(LinkedList<Website> websiteLinkedList)
+            throws HistoryDatabaseException {
+        try {
+            establishDBConnection();
+            // Iterate through a LinkedList<Website>, saving each element
+            // to the history database
+            System.out.println(websiteLinkedList);
+            for (int i = 0; i != websiteLinkedList.size() && conn != null; i++) {
+                System.out.println(websiteLinkedList.get(i).getUrlAddress());
+                saveWebsiteToDB(websiteLinkedList.get(i).getUrlAddress());
+            }
+        } catch (Exception e) {
+            throw new HistoryDatabaseException(databaseMessage);
+        }
+        terminateDBConnection();
+    }
+
+    /**
+     * Returns a LinkedList<String> of abstracts if a database connection is
+     * possible, and there are abstracts in the database. Returns null otherwise.
+     * @return all abstracts if any, null otherwise
+     * @throws HistoryDatabaseException Thrown when a connection to
+     * the history database cannot be established.
+     */
+    public LinkedList<String> getAbstractHistoryFromDB()
+            throws HistoryDatabaseException {
+        
+        LinkedList<String> abstractLinkedList = new LinkedList<String>();
+
+        try {
+            if (!connStatus) {
+                establishDBConnection();
+            }
+            ResultSet rs = s.executeQuery(
+                    "select id, date, abstractText from "
+                    + "csc207_historydbmgr.abstract");
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                Date date = rs.getDate("date");
+                String abstractText = rs.getString("abstractText");
+                abstractLinkedList.add(abstractText);
+                System.out.println(id + "\t" + date + "\t" + abstractText);
+            }
+        } catch (SQLException e) {
+            throw new HistoryDatabaseException(databaseMessage);
+        }
+        terminateDBConnection();
+        return abstractLinkedList;
+    }
+
+    /**
+     * Returns a LinkedList containing URL Strings contained in the history database.
+     * @return LinkedList<String> urlLinkedList
+     * @throws HistoryDatabaseException Thrown when a connection to
+     * the history database cannot be established.
+     */
+    public LinkedList<String> getURLHistoryFromDB() throws HistoryDatabaseException {
+
+        if (!connStatus) {
+            establishDBConnection();
+        }
+        LinkedList<String> urlLinkedList = new LinkedList<String>();
+        try {
+            ResultSet rs = s.executeQuery(
+                    "select id, date, urlString from "
+                    + "csc207_historydbmgr.url");
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String date = rs.getString("date");
+                String urlString = rs.getString("urlString");
+                urlLinkedList.add(date+urlString);
+            }
+        } catch (SQLException e) {
+            throw new HistoryDatabaseException(databaseMessage);
+        }
+        terminateDBConnection();
+        return urlLinkedList;
+    }
+
+    /**
+     * Establishes a Connection conn with the mySQL database.
+     * @return Connection conn
+     */
+    public static boolean establishDBConnection() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conn = DriverManager.getConnection(dburl, dbuserName, dbpassword);
+            s = conn.createStatement();
+            connStatus = true;
+            System.out.println("Connection established.");
+        } catch (Exception e) {
+            System.out.println("Couldn't connect for some reason: " + e);
+            return connStatus;
+        }
+        return connStatus;
+    }
+
+    /**
+     * Returns true if connected, false otherwise.
+     * @return
+     */
+    public static boolean getConnectionStatus() {
+        return connStatus;
+    }
+
+    /**
+     * Terminates the connection with the mySQL database and
+     * ignores any close errors.
+     */
+    public static void terminateDBConnection() {
+        if (conn != null) {
+            try {
+                conn.close();
+                System.out.println("Database connection terminated");
+            } catch (Exception e) { /* ignore close errors */ }
+        }
+        connStatus = false;
+    }
+
+    /**
+     * Sets up user:password credentials for accessing the history database.
+     * @param userNameInput
+     * @param passwordInput
+     */
+    protected static void setDBCredentials(String userNameInput, String passwordInput) {
+        dbuserName = userNameInput;
+        dbpassword = passwordInput;
+    }
+}

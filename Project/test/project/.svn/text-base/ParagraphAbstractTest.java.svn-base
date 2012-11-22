@@ -1,0 +1,192 @@
+package project;
+
+import java.util.LinkedList;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ * A JUnit test for ParagraphAbstract.java.
+ */
+public class ParagraphAbstractTest {
+
+    public String s1, s2;
+    public LinkedList<Keyword> list = new LinkedList<Keyword>();
+
+    public ParagraphAbstractTest() {
+        s1 = "Just a sentense.";
+        s2 = "";
+    }
+
+    /**
+     * Test of setParagraphInfo method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testSetParagraphInfo() {
+        System.out.println("setKeywordPriority");
+        ParagraphAbstract instance = new ParagraphAbstract();
+        instance.setParagraphInfo(s1);
+        assertTrue(instance.hasKeywords());
+    }
+
+    /**
+     * Test of setKeywordPriority method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testSetKeywordPriority() {
+        System.out.println("setKeywordPriority");
+        String word = "just";
+        int priority = 0;
+        ParagraphAbstract instance = new ParagraphAbstract();
+        instance.setKeywordPriority(word, priority);
+        int expResult = 0;
+        int Result = instance.getKeywordPriority(word);
+        assertEquals(expResult, Result);
+    }
+
+    /**
+     * Test of addKeyword method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testAddKeyword() {
+        System.out.println("addKeyword");
+        String word = "just";
+        int priority = 0;
+        ParagraphAbstract instance = new ParagraphAbstract();
+        boolean expResult = true;
+        boolean result = instance.addKeyword(word, priority);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of addKeyword method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testAddKeyword2() {
+        System.out.println("addKeyword");
+        String word = "another";
+        int priority = 0;
+        ParagraphAbstract instance = new ParagraphAbstract();
+        boolean expResult = true;
+        boolean result = instance.addKeyword(word, priority);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getKeywordPriority method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testGetKeywordPriority() {
+        System.out.println("getKeywordPriority");
+        String word = "";
+        ParagraphAbstract instance = new ParagraphAbstract();
+        int expResult = 0;
+        int result = instance.getKeywordPriority(word);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getKeywordPriority method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testGetKeywordPriority2() {
+        System.out.println("getKeywordPriority");
+        String word = "just";
+        ParagraphAbstract instance = new ParagraphAbstract();
+        int expResult = 0;
+        int result = instance.getKeywordPriority(word);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of deleteKeyword method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testDeleteKeyword() {
+        System.out.println("deleteKeyword");
+        String word = "just";
+        ParagraphAbstract instance = new ParagraphAbstract();
+        instance.deleteKeyword(word);
+        int expResult = 0;
+        int result = instance.getTotalPriority();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of deleteKeyword method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testDeleteKeyword2() {
+        System.out.println("deleteKeyword");
+        String word = "";
+        ParagraphAbstract instance = new ParagraphAbstract();
+        instance.deleteKeyword(word);
+        int expResult = 0;
+        int result = instance.getTotalPriority();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getParagraph method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testGetParagraph() {
+        System.out.println("getParagraph");
+        ParagraphAbstract instance = new ParagraphAbstract();
+        instance.setParagraphInfo(s1);
+        String expResult = "Just a sentense.";
+        String result = instance.getParagraph();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getKeywordList method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testGetKeywordList() {
+        System.out.println("getKeywordList");
+        ParagraphAbstract instance = new ParagraphAbstract();
+        instance.setParagraphInfo(s2);
+        int expResult = 0;
+        int result = instance.getKeywordList().size();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getTotalPriority method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testGetTotalPriority() {
+        System.out.println("getTotalPriority");
+        ParagraphAbstract instance = new ParagraphAbstract();
+        // The expecting result was depending on how we initialize
+        // keyword priorities.
+        int expResult = 0;
+        int result = instance.getTotalPriority();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of hasKeywords method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testHasKeywords() {
+        System.out.println("hasKeywords");
+        ParagraphAbstract instance = new ParagraphAbstract();
+        boolean expResult = false;
+        boolean result = instance.hasKeywords();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getKeyphrases method, of class ParagraphAbstract.
+     */
+    @Test
+    public void testGetKeyphrases() {
+        System.out.println("getKeyphrases");
+        ParagraphAbstract instance = new ParagraphAbstract();
+        LinkedList list1 = instance.getKeyphrases(s1);
+        String result =  list1.getFirst().toString();
+        String expResult = "just";
+        assertEquals(expResult, result);
+    }
+}
